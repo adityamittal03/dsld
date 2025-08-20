@@ -105,7 +105,7 @@ predict(lin2, newData)
     of conditions for sensitive groups via linear models, with 
     interactions with S.
 
-    The \code{dsldDiffS} function allows users to compare mean Y at that
+    The \code{dsldDiffSLin} function allows users to compare mean Y at that
     X between each pair of S level for additional new unseen data levels
     using the model fitted from \code{dsldLinear}.
 

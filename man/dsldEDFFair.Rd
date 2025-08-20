@@ -13,15 +13,12 @@
 }
 
 \usage{
-dsldQeFairKNN(data, yName, sNames, deweightPars=NULL, yesYVal=NULL,k=25,
-  scaleX=TRUE, holdout=floor(min(1000,0.1*nrow(data))))
-dsldQeFairRF(data,yName,sNames,deweightPars=NULL, nTree=500, minNodeSize=10,
-  mtry = floor(sqrt(ncol(data))),yesYVal=NULL,
-  holdout=floor(min(1000,0.1*nrow(data))))
-dsldQeFairRidgeLin(data, yName, sNames, deweightPars = NULL, 
-  holdout=floor(min(1000,0.1*nrow(data))))
-dsldQeFairRidgeLog(data, yName, sNames, deweightPars = NULL, holdout =
-  floor(min(1000, 0.1 * nrow(data))), yesYVal = levels(data[, yName])[2])
+dsldQeFairKNN(data, yName, sNames, deweightPars = NULL, 
+  yesYVal = NULL, k = 25, scaleX = TRUE)
+dsldQeFairRF(data, yName, sNames, deweightPars = NULL, nTree = 500, 
+  minNodeSize = 10, mtry = floor(sqrt(ncol(data))), yesYVal = NULL)
+dsldQeFairRidgeLin(data, yName, sNames, deweightPars = NULL)
+dsldQeFairRidgeLog(data, yName, sNames, deweightPars = NULL, yesYVal)
 \method{predict}{dsldQeFair}(object,newx,...)
 }
 
@@ -53,10 +50,6 @@ dsldQeFairRidgeLog(data, yName, sNames, deweightPars = NULL, holdout =
         \code{dsldQeFairKNN} for which this is an argument, 
         it is the number of neighbors to use in finding 
         conditional probabilities via knnCalib.
-    } 
-    \item{holdout}{
-        How many rows to use as the holdout/testing set. Can be NULL.
-        The testing set is used to calculate s correlation and test accuracy.
     } 
     \item{nTree}{
         Number of trees.

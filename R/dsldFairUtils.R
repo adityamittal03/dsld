@@ -71,7 +71,7 @@ dsldFairUtils <- function(data, yName, sName, dsldFTNName, unfairness = NULL,
     folds <- make_folds(nrow(data), k = k_folds)
     
     # Inner CV runner for one deweight combination (named numeric list)
-    run_one_combo <- function(dw_list_named) {
+    run_one_combo_1 <- function(dw_list_named) {
       accs <- numeric(length(folds))
       corr_sums <- NULL
       feat_names <- NULL
@@ -126,7 +126,7 @@ dsldFairUtils <- function(data, yName, sName, dsldFTNName, unfairness = NULL,
       dw_row <- lapply(grid_df[r, , drop = FALSE], function(x) as.numeric(x)[1])
       names(dw_row) <- names(grid_df)
       
-      metrics <- run_one_combo(dw_row)
+      metrics <- run_one_combo_1(dw_row)
       
       # Build a single row: params first, then metrics; keep raw names for correlation columns
       rows[[r]] <- as.data.frame(c(as.list(dw_row), metrics), check.names = FALSE)
@@ -150,7 +150,7 @@ dsldFairUtils <- function(data, yName, sName, dsldFTNName, unfairness = NULL,
     folds <- make_folds(nrow(data), k = k_folds)
     
     # Inner CV runner for one unfairness value
-    run_one_combo <- function(u_val) {
+    run_one_combo_2 <- function(u_val) {
       accs <- numeric(length(folds))
       corr_sums <- NULL
       feat_names <- NULL
@@ -202,7 +202,7 @@ dsldFairUtils <- function(data, yName, sName, dsldFTNName, unfairness = NULL,
     rows <- vector("list", length(unfairness))
     for (u_idx in seq_along(unfairness)) {
       unfairVal <- as.numeric(unfairness[u_idx])
-      m <- as.list(run_one_combo(unfairVal))  # named list: testAcc + corr cols
+      m <- as.list(run_one_combo_2(unfairVal))  # named list: testAcc + corr cols
       
       rows[[u_idx]] <- data.frame(
         c(

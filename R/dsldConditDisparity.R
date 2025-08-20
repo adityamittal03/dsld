@@ -13,7 +13,7 @@
 #   useLoess: if TRUE, use loess smoothing
 
 dsldConditDisparity <- function(data, yName, sName, xName, condits = NULL,
-                                qeFtn = qeKNN, minS = 50, useLoess = TRUE, yesYVal = NULL)
+                                qeFtn = qeKNN, minS = 50, useLoess = TRUE)
 {
     getSuggestedLib('qeML') 
   

@@ -12,8 +12,7 @@
 #    qeMLftnName is, e.g. 'qeKNN'; opts is an R list of optional arguments
 #    for that function
 
-dsldML<-function(data,yName,sName,qeMLftnName,sComparisonPts='rand5',
-   opts=NULL){
+dsldML<-function(data,yName,sName,qeMLftnName,sComparisonPts='rand5',opts=NULL){
 
   ycol <- which(names(data) == yName)
   scol <- which(names(data) == sName)

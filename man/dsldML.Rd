@@ -7,8 +7,7 @@ Nonparametric comparison of sensitive groups.
 }
 
 \usage{
-dsldML(data,yName,sName,qeMLftnName,sComparisonPts="rand5",
-    opts=NULL,holdout=NULL)
+dsldML(data,yName,sName,qeMLftnName,sComparisonPts='rand5',opts=NULL)
 }
 
 \arguments{
@@ -32,9 +31,6 @@ dsldML(data,yName,sName,qeMLftnName,sComparisonPts="rand5",
     }
     \item{opts}{
         An R list specifying arguments for the above \code{qeML} function.
-    }
-    \item{holdout}{
-        The size of holdout set.
     }
 }
 
