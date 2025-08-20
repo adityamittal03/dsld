@@ -60,18 +60,24 @@ dsldLogit(data, yName, sName, sComparisonPts = NULL, interactions = FALSE,
 \examples{
 
 data(lsa)
+
+### interactions case
 newData <- lsa[c(2,22,222,2222),-c(8,11)]
 log1 <- dsldLogit(lsa,'bar','race1', newData, interactions = TRUE, 'TRUE')
 
+# extract results
 coef(log1)
 vcov(log1) 
-summary(log1) 
+summary(log1)
+
+# predict new data
 predict(log1, newData)
-            
-log2 <- dsldLogit(data = lsa,
-    yName = 'bar',sName = 'gender', 
+    
+# no interaction case
+log2 <- dsldLogit(data = lsa, yName = 'bar',sName = 'gender', 
     interactions = FALSE, yesYVal = 'TRUE')
 summary(log2)
+
 }
 
 \details{

@@ -103,6 +103,10 @@ dsldQeFairRidgeLog(data, yName, sNames, deweightPars = NULL, holdout =
     choose a desired position in the Fairness-Utility Tradeoff.
 
     More details can be found in the references. 
+    
+    The DSLD package extends functionality by providing both accuracy 
+    (MAPE or misclassification rate) and fairness (correlation) on the 
+    training set during model training.
 }
 
 \value{
@@ -123,35 +127,53 @@ Matloff, Norman, and Wenxi Zhang. "A novel regularization approach to fair ML." 
 
 \examples{  
 \donttest{
-data(compas1) 
-data(svcensus) 
+# regression example
+data(svcensus)
 
-# dsldQeFairKNN: deweight "decile score" column with "race" as 
-# the sensitive variable
-knnOut <- dsldQeFairKNN(compas1, "two_year_recid", "race", 
-   list(decile_score=0.1), yesYVal = "Yes")
-knnOut$testAcc 
-knnOut$corrs 
-predict(knnOut, compas1[1,-8]) 
-
-# dsldFairRF: deweight "decile score" column with "race" as sensitive variable
-rfOut <- dsldQeFairRF(compas1, "two_year_recid", "race", 
-   list(decile_score=0.3), yesYVal = "Yes")
-rfOut$testAcc
-rfOut$corrs 
-predict(rfOut, compas1[1,-8]) 
+# test/train splits
+n <- nrow(svcensus)
+train_idx <- sample(seq_len(n), size = 0.7 * n) 
+train <- svcensus[train_idx, ]
+test  <- svcensus[-train_idx, -4]
+test_y <- svcensus[-train_idx, 4]
 
 # dsldQeFairRidgeLin: deweight "occupation" and "age" columns
-lin <- dsldQeFairRidgeLin(svcensus, "wageinc", "gender", deweightPars = 
-  list(occ=.4, age=.2))
-lin$testAcc 
-lin$corrs 
-predict(lin, svcensus[1,-4])
+### also works for qeFairKNN and qeFairRF
+lin <- dsldQeFairRidgeLin(train, "wageinc", "gender", deweightPars = 
+                            list(occ=.4, age=.2))
 
-# dsldQeFairRidgeLin: deweight "decile score" column
-log <- dsldQeFairRidgeLog(compas1, "two_year_recid", "race", 
-  list(decile_score=0.1), yesYVal = "Yes")
-log$testAcc 
-log$corrs 
-predict(log, compas1[1,-8])}
-}     
+# training results
+lin$trainAcc
+lin$trainCorrs
+
+# testing results
+res <- predict(lin, test) 
+res$correlations
+mean(abs(res$preds - test_y))
+
+
+# classification example
+data(compas1) 
+
+# test/train splits
+n <- nrow(compas1)
+train_idx <- sample(seq_len(n), size = 0.7 * n) 
+train <- compas1[train_idx, ]
+test  <- compas1[-train_idx, -8]
+test_y <- compas1[-train_idx, 8]
+test_y <- as.factor(as.integer(test_y== 'Yes'))
+
+# dsldQeFairKNN: deweight "decile score" column with "race" as the sensitive variable
+# also works for qeFairRF, qeFairRidgeLog
+knnOut <- dsldQeFairKNN(compas1, "two_year_recid", "race", 
+                        list(decile_score=0.1), yesYVal = "Yes")
+
+# training/testing results
+knnOut$trainAcc 
+knnOut$trainCorrs 
+res = predict(knnOut, test) 
+res$correlations
+mean(test_y != round(res$preds$probs))
+} 
+
+}

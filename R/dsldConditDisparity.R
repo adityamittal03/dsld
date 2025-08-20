@@ -13,7 +13,7 @@
 #   useLoess: if TRUE, use loess smoothing
 
 dsldConditDisparity <- function(data, yName, sName, xName, condits = NULL,
-                                qeFtn = qeKNN, minS = 50, useLoess = TRUE)
+                                qeFtn = qeKNN, minS = 50, useLoess = TRUE, yesYVal = NULL)
 {
     getSuggestedLib('qeML') 
   
@@ -23,6 +23,7 @@ dsldConditDisparity <- function(data, yName, sName, xName, condits = NULL,
     }
 
     y <- data[[yName]]
+    
     dichotY <- inherits(y, "factor") && length(levels(y) == 2)
 
     if (!inherits(y, "numeric") &&

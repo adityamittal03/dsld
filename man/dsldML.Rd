@@ -43,6 +43,10 @@ dsldML(data,yName,sName,qeMLftnName,sComparisonPts="rand5",
 }
 
 \examples{  
+
+## applying K-NN
+## also works for: qeRF, qeRFranger, qeLASSO, qePolyLin/qePolyLog, qeXGBoost
+
 data(svcensus) 
 w <- dsldML(svcensus,'wageinc','gender',qeMLftnName='qeKNN',
    opts=list(k=50))

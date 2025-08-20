@@ -61,14 +61,20 @@ dsldLinear(data, yName, sName, interactions = FALSE, sComparisonPts = NULL,
 \examples{  
 data(svcensus) 
 
+### interactions case
 newData <- svcensus[c(1, 18), -c(4,6)] 
 lin1 <- dsldLinear(svcensus, 'wageinc', 'gender', interactions = TRUE,
     newData)
+    
+# extract results
 coef(lin1)
 vcov(lin1) 
 summary(lin1)
+
+# predict on newData 
 predict(lin1, newData)
 
+### no interactions case
 lin2 <- dsldLinear(svcensus, 'wageinc', 'gender', interactions = FALSE)
 summary(lin2)
 }
