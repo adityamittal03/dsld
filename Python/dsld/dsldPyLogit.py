@@ -4,7 +4,7 @@
     users data input is in pandas data frame before doing any computation
 '''
 
-from Utils import dsld_Rpy2_IsRDataframe, R_NULL, dsld_Rpy2_RDataframeToPandas
+from .Utils import dsld_Rpy2_IsRDataframe, R_NULL, dsld_Rpy2_RDataframeToPandas
 import rpy2.robjects as robjects
 from rpy2.robjects import pandas2ri
 from rpy2.robjects import conversion

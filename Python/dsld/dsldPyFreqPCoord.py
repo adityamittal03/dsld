@@ -8,7 +8,7 @@ import rpy2.robjects as ro
 from rpy2.robjects.vectors import IntVector, StrVector, BoolVector
 from rpy2.robjects.packages import importr
 
-from Utils import dsld_Rpy2_IsRDataframe 
+from .Utils import dsld_Rpy2_IsRDataframe 
 
 dsld = importr("dsld")
 grdevices = importr("grDevices")

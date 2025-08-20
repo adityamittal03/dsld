@@ -2,7 +2,7 @@ import os, tempfile
 import rpy2.robjects as ro
 from rpy2.robjects.vectors import StrVector, IntVector, BoolVector
 from IPython.display import Image, display
-from Utils import dsld_Rpy2_IsRDataframe, dsld_Rpy2_RDataframeToPandas
+from .Utils import dsld_Rpy2_IsRDataframe, dsld_Rpy2_RDataframeToPandas
 from rpy2.robjects.packages import importr
 import rpy2.robjects as robjects
 

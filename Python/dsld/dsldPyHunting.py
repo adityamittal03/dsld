@@ -1,4 +1,4 @@
-from Utils import dsld_Rpy2_IsRDataframe, dsld_Rpy2_RDataframeToPandas
+from .Utils import dsld_Rpy2_IsRDataframe, dsld_Rpy2_RDataframeToPandas
 import sys
 import os
 import pandas as pd
