@@ -336,7 +336,7 @@ predict.dsldGLM <- function(object, xNew,...){
   if (length(object) == 1) {
     data <- object[[1]]$data
     model <- object[[1]]$model
-    xNew <- apply_factor_levels(xNew, object$FactorsInfo)
+    xNew <- apply_factor_levels(xNew, object[[1]]$FactorsInfo)
     predictions <- predict(model, xNew, type = "response", se.fit = TRUE)
     pred <- predictions$fit
     se <- predictions$se.fit

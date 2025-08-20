@@ -112,6 +112,8 @@ res <- predict(frrmOut, test)
 res$correlations
 mean(abs(res$preds - test_y))
 
+# also works with dsldNclm, dsldZlm
+
 # classification example
 data(compas1)
 
@@ -137,6 +139,8 @@ fgrrmOut$trainAcc
 res <- predict(fgrrmOut, test) 
 res$correlations
 mean(test_y != round(res$preds))
+
+# also works with dsldZlm
 }
 
 }

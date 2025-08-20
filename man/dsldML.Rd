@@ -48,9 +48,13 @@ dsldML(data,yName,sName,qeMLftnName,sComparisonPts="rand5",
 ## also works for: qeRF, qeRFranger, qeLASSO, qePolyLin/qePolyLog, qeXGBoost
 
 data(svcensus) 
+
 w <- dsldML(svcensus,'wageinc','gender',qeMLftnName='qeKNN',
    opts=list(k=50))
+   
+# prints testAcc for each level in sName and the predictions on sComparisonPts
 print(w)
+
 }
 
 \details{

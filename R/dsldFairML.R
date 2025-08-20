@@ -35,8 +35,11 @@ dsldFrrm <- function(data, yName, sName, unfairness,
                      save.auxiliary = FALSE) {
   
   data <- toNumericFactor(data)
-  model = fairmlBase(fairml::frrm, data, yName, sName, unfairness,
-             definition, lambda, save.auxiliary)
+  
+  suppressWarnings({
+    model = fairmlBase(fairml::frrm, data, yName, sName, unfairness,
+                       definition, lambda, save.auxiliary)
+  })
   
   # training preds/corrs
   predictors <- data[,!colnames(data) %in% c(yName, sName)]
@@ -54,8 +57,11 @@ dsldFgrrm <- function(data, yName, sName, unfairness,
   
   data <- toNumericFactor(data)
   data[[yName]] <- as.factor(as.integer(data[[yName]] == yesYVal))
-  model <- fairmlBase(fairml::fgrrm, data, yName, sName, unfairness,
-             definition, family, lambda, save.auxiliary)
+  
+  suppressWarnings({
+    model <- fairmlBase(fairml::fgrrm, data, yName, sName, unfairness,
+                        definition, family, lambda, save.auxiliary)
+  })
   
   # training preds/corrs
   predictors <- data[,!colnames(data) %in% c(yName, sName)]
@@ -73,8 +79,11 @@ dsldNclm <- function(data, yName, sName, unfairness, covfun = cov,
   
   getSuggestedLib('cccp')
   data <- toNumericFactor(data)
-  model <- fairmlBase(fairml::nclm, data, yName, sName, unfairness, covfun, 
-             lambda, save.auxiliary)
+  
+  suppressWarnings({
+    model <- fairmlBase(fairml::nclm, data, yName, sName, unfairness, covfun, 
+                        lambda, save.auxiliary)
+  })
   
   # training preds/corrs
   predictors <- data[,!colnames(data) %in% c(yName, sName)]
@@ -90,7 +99,10 @@ dsldZlm <- function(data, yName, sName, unfairness) {
  
   getSuggestedLib('CVXR')
   data <- toNumericFactor(data)
-  model <- fairmlBase(fairml::zlm, data, yName, sName, unfairness)
+  
+  suppressWarnings({
+    model <- fairmlBase(fairml::zlm, data, yName, sName, unfairness)
+  })
   
   # training preds/corrs
   predictors <- data[,!colnames(data) %in% c(yName, sName)]
@@ -107,7 +119,10 @@ dsldZlrm <- function(data, yName, sName, unfairness, yesYVal) {
   getSuggestedLib('CVXR')
   data <- toNumericFactor(data)
   data[[yName]] <- as.factor(as.integer(data[[yName]] == yesYVal))
-  model <- fairmlBase(fairml::zlrm, data, yName, sName, unfairness)
+  
+  suppressWarnings({
+    model <- fairmlBase(fairml::zlrm, data, yName, sName, unfairness)
+  })
   
   # training preds/corrs
   predictors <- data[,!colnames(data) %in% c(yName, sName)]
@@ -125,30 +140,31 @@ summary.dsldFairML <- function(object,...){
 }
 
 predict.dsldFairML <- function(object, newx,...) {
-  
-  # data-prep
-  newx <- toNumericFactor(newx)
-  newx <- apply_factor_levels(newx, object$FactorsInfo)
-  
-  yName <- object$yName
-  sName <- object$sName
-  predictors <- newx[,!colnames(newx) %in% c(yName, sName)]
-  sensitive <- newx[,sName]
-  
-  class <- class(object$base)[1]
-  
-  if (class %in% c("zlm", "zlrm")) {
+  suppressWarnings({
+    # data-prep
+    newx <- toNumericFactor(newx)
+    newx <- apply_factor_levels(newx, object$FactorsInfo)
     
-    # zlm and zlrm have one less argument for prediction
-    preds <- predict(object$base, predictors)
-    cors  <- s_correlations(newx, sName, preds)
-    return(list(preds = preds, correlations = cors))
+    yName <- object$yName
+    sName <- object$sName
+    predictors <- newx[,!colnames(newx) %in% c(yName, sName)]
+    sensitive <- newx[,sName]
     
-  } else { 
+    class <- class(object$base)[1]
     
-    preds <- predict(object$base, predictors, sensitive)
-    cors  <- s_correlations(newx, sName, preds)
-    return(list(preds = preds, correlations = cors))
-    
-  }
+    if (class %in% c("zlm", "zlrm")) {
+      
+      # zlm and zlrm have one less argument for prediction
+      preds <- predict(object$base, predictors)
+      cors  <- s_correlations(newx, sName, preds)
+      return(list(preds = preds, correlations = cors))
+      
+    } else { 
+      
+      preds <- predict(object$base, predictors, sensitive)
+      cors  <- s_correlations(newx, sName, preds)
+      return(list(preds = preds, correlations = cors))
+      
+    }
+  })
 }

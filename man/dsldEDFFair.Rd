@@ -151,6 +151,8 @@ res <- predict(lin, test)
 res$correlations
 mean(abs(res$preds - test_y))
 
+# also works with dsldQeFairRF, dsldQeFairKNN
+
 
 # classification example
 data(compas1) 
@@ -174,6 +176,8 @@ knnOut$trainCorrs
 res = predict(knnOut, test) 
 res$correlations
 mean(test_y != round(res$preds$probs))
+
+# also works with dsldQeFairRF, dsldQeFairRidgeLog
 } 
 
 }

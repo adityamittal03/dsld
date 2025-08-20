@@ -61,7 +61,7 @@ dsldLinear(data, yName, sName, interactions = FALSE, sComparisonPts = NULL,
 \examples{  
 data(svcensus) 
 
-### interactions case
+### interactions case - exclude S and Y in newData
 newData <- svcensus[c(1, 18), -c(4,6)] 
 lin1 <- dsldLinear(svcensus, 'wageinc', 'gender', interactions = TRUE,
     newData)
@@ -71,12 +71,16 @@ coef(lin1)
 vcov(lin1) 
 summary(lin1)
 
-# predict on newData 
+# predict on newData  --- one prediction for each level of S per row
 predict(lin1, newData)
 
-### no interactions case
+### no interactions case - exclude Y in newData
+newData <- svcensus[c(1, 18), -c(4)] 
 lin2 <- dsldLinear(svcensus, 'wageinc', 'gender', interactions = FALSE)
 summary(lin2)
+
+# predict on newData  --- one prediction per row
+predict(lin2, newData)
 }
 
 \details{

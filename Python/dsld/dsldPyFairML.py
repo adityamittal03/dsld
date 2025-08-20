@@ -2,7 +2,7 @@
 Python interface for dsldFairML functions in the dsld R package.
 '''
 
-from .Utils import dsld_Rpy2_IsRDataframe
+from Utils import dsld_Rpy2_IsRDataframe
 from rpy2.robjects.packages import importr
 import rpy2.robjects as robjects
 

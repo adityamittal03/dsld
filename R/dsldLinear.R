@@ -406,7 +406,7 @@ predict.dsldLM <- function(object, xNew,...) {
   df <- data.frame()
   yName = object[[1]]$yName
   if (length(object) == 1) {
-    xNew <- apply_factor_levels(xNew, object$FactorsInfo)
+    xNew <- apply_factor_levels(xNew, object[[1]]$FactorsInfo)
     data <- object[[1]]$data
     colName <- names(data)
     colName <- colName[colName != yName]
