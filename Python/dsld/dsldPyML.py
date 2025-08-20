@@ -4,7 +4,7 @@
     users data input is in pandas data frame before doing any computation
 '''
 
-from Utils import dsld_Rpy2_IsRDataframe, R_NULL, dsld_Rpy2_RDataframeToPandas
+from .Utils import dsld_Rpy2_IsRDataframe, R_NULL, dsld_Rpy2_RDataframeToPandas
 import sys
 import pandas as pd
 import rpy2.robjects as robjects
@@ -14,7 +14,7 @@ from rpy2.robjects.packages import importr
 import rpy2.robjects as ro
 import math
 from rpy2.robjects.vectors import ListVector, FloatVector
-from Utils import dsld_Rpy2_RDataframeToPandas
+from .Utils import dsld_Rpy2_RDataframeToPandas
 import pandas as pd
 
 # Import R packages

@@ -3,7 +3,7 @@
     The code uses rpy2 to handle dsld functions call from R and pandas library to check if
     users data input is in pandas data frame before doing any computation
 '''
-from Utils import dsld_Rpy2_IsRDataframe, R_NULL, ERROR, dsld_Rpy2_RDataframeToPandas
+from .Utils import dsld_Rpy2_IsRDataframe, R_NULL, ERROR, dsld_Rpy2_RDataframeToPandas
 import sys
 import os
 import pandas as pd
